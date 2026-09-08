@@ -51,6 +51,15 @@ class _ContadorScreenState extends State<ContadorScreen> {
     });
   }
 
+  void _irASegundaPagina() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SegundaPagina(contadorActual: _contador),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +71,6 @@ class _ContadorScreenState extends State<ContadorScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Imagen/ícono de reloj arriba del contador
             const Icon(
               Icons.access_time_filled,
               size: 80,
@@ -99,6 +107,16 @@ class _ContadorScreenState extends State<ContadorScreen> {
                 ),
               ],
             ),
+            const SizedBox(height: 24),
+            ElevatedButton.icon(
+              onPressed: _irASegundaPagina,
+              icon: const Icon(Icons.arrow_forward),
+              label: const Text('Ir a otra página'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.deepPurple,
+                foregroundColor: Colors.white,
+              ),
+            ),
           ],
         ),
       ),
@@ -106,6 +124,49 @@ class _ContadorScreenState extends State<ContadorScreen> {
         onPressed: _incrementar,
         tooltip: 'Sumar',
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+class SegundaPagina extends StatelessWidget {
+  final int contadorActual;
+
+  const SegundaPagina({super.key, required this.contadorActual});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Segunda Página'),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(
+              Icons.check_circle,
+              size: 80,
+              color: Colors.greenAccent,
+            ),
+            const SizedBox(height: 24),
+            Text(
+              'El contador llegó a: $contadorActual',
+              style: const TextStyle(fontSize: 22, color: Colors.white),
+            ),
+            const SizedBox(height: 32),
+            ElevatedButton.icon(
+              onPressed: () => Navigator.pop(context),
+              icon: const Icon(Icons.arrow_back),
+              label: const Text('Regresar'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.deepPurple,
+                foregroundColor: Colors.white,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
